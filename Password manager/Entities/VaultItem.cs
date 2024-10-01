@@ -7,5 +7,6 @@ public class VaultItem
     [Key]
     public string Url { get; set; }
     public string EncryptedPassword { get; set; }
-    public string Salt { get; set; }
+    public string Nonce { get; set; }
+    public string Tag { get; set; }
 }

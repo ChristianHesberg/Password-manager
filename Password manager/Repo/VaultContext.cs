@@ -12,8 +12,6 @@ public class VaultContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var databasePath = "../../../passwordmanager.db";  
-        optionsBuilder.UseSqlite($"Data Source={databasePath}");  
-        
-        Console.WriteLine($"Database Path: {databasePath}"); 
+        optionsBuilder.UseSqlite($"Data Source={databasePath}");
     }
 }
