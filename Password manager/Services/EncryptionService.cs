@@ -1,10 +1,18 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using Password_manager.Repo;
 
 namespace Password_manager.Services;
 
 public class EncryptionService
 {
+    private readonly VaultContext _db;
+
+    public EncryptionService(VaultContext db)
+    {
+        this._db = db;
+    }
+
     public (byte[] key, byte[] salt) GenerateVaultKey(string password, string salt, int keySize = 32, int saltSize = 16, int iterations = 10000)  
     {  
         // Generate a unique salt  
