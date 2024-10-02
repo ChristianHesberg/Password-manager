@@ -7,11 +7,12 @@ using Password_manager;
 using Password_manager.Entities;
 using Password_manager.Repo;
 using Password_manager.Services;
+using Password_manager.Utils;
 
 var username = "peter";
 var password = "p@ssw0rd1!";
 
-EncryptionService encryptionService = new EncryptionService();
+EncryptionDecryptionUtils encryptionService = new EncryptionDecryptionUtils();
 var res = encryptionService.GenerateVaultKey(password, Constants.SaltInBase64);
 Console.WriteLine(Convert.ToBase64String(res.key));
 Console.WriteLine(Convert.ToBase64String(res.salt));

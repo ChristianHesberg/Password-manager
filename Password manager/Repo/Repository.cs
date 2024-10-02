@@ -21,4 +21,15 @@ public class Repository
     {
         return db.Password.ToList().First();
     }
-}
+
+    public void AddVaultItem(VaultItem entity)
+    {
+        db.Add(entity);
+        db.SaveChanges();
+    }
+
+    public List<VaultItem> GetVaultItems()
+    {
+        return db.Vault.ToList();
+    }
+}   

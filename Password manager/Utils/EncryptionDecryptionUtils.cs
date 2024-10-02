@@ -1,18 +1,10 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using Password_manager.Repo;
 
-namespace Password_manager.Services;
+namespace Password_manager.Utils;
 
-public class EncryptionService
+public class EncryptionDecryptionUtils
 {
-    private readonly VaultContext _db;
-
-    public EncryptionService(VaultContext db)
-    {
-        this._db = db;
-    }
-
     public (byte[] key, byte[] salt) GenerateVaultKey(string password, string salt, int keySize = 32, int saltSize = 16, int iterations = 10000)  
     {  
         // Generate a unique salt  
@@ -48,6 +40,13 @@ public class EncryptionService
         aes.Decrypt(nonce, ciphertext, tag, plaintextBytes);
 
         return Encoding.UTF8.GetString(plaintextBytes);
+    }
+
+    public byte[] GenerateSalt(int saltSize)
+    {
+        var key = new byte[saltSize];
+        RandomNumberGenerator.Fill(key);
+        return key;
     }
 
     public string SerializePayload(string url, string password)
