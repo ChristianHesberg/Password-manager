@@ -9,7 +9,56 @@ using Password_manager.Repo;
 using Password_manager.Services;
 using Password_manager.Utils;
 
-var username = "peter";
+using var db = new VaultContext();
+var repo = new Repository(db);
+var utils = new EncryptionDecryptionUtils();
+var vaultService = new VaultService(repo, utils);
+var loginService = new LoginService(repo, utils);
+var appUtils = new ConsoleAppUtils(loginService);
+
+Console.WriteLine("Welcome to Password Manager!");
+
+string password;
+byte[] key;
+if (!loginService.CheckForAccount())
+{
+    Console.WriteLine("No user found, please enter password for new user");
+    password = appUtils.ReadPassword();
+    
+    loginService.CreateAccount(password);
+}
+else
+{
+    password = appUtils.EnterValidPassword();
+    key = loginService.GenerateVaultKey(password);
+}
+
+var selected = appUtils.DisplayMenu();
+if (selected == 0)
+{
+    vaultService.GetEntries(key);
+}
+
+if (selected == 1)
+{
+    //handle enter new pair
+}
+
+
+              
+// Here you would call your authentication service to verify the password  
+// For now, we'll just display the password entered for demonstration purposes  
+
+              
+// You can replace the above line with your login service call  
+// bool isAuthenticated = AuthenticationService.Login(password);  
+// if (isAuthenticated) { ... } else { ... }  
+  
+Console.WriteLine("Press any key to exit...");  
+Console.ReadKey();  
+
+
+/*var username = "peter";
 var password = "p@ssw0rd1!";
 
 EncryptionDecryptionUtils encryptionService = new EncryptionDecryptionUtils();

@@ -1,4 +1,6 @@
-﻿using Password_manager.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Password_manager.Entities;
 
 namespace Password_manager.Repo;
 
@@ -32,4 +34,14 @@ public class Repository
     {
         return db.Vault.ToList();
     }
+
+    public void ClearDatabase()
+    {
+        var entity1 = db.Password.First();
+        db.Password.Remove(entity1);
+        
+        var entity2 = db.Vault.First();
+        db.Vault.Remove(entity2);
+        db.SaveChanges();
+    } 
 }   

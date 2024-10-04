@@ -21,7 +21,11 @@ namespace Password_manager.Migrations
                     b.Property<string>("HashedPassword")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Salt")
+                    b.Property<string>("KeySalt")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordSalt")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -32,18 +36,18 @@ namespace Password_manager.Migrations
 
             modelBuilder.Entity("Password_manager.Entities.VaultItem", b =>
                 {
-                    b.Property<string>("Url")
+                    b.Property<string>("Data")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("EncryptedPassword")
+                    b.Property<string>("Nonce")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Salt")
+                    b.Property<string>("Tag")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Url");
+                    b.HasKey("Data");
 
                     b.ToTable("Vault");
                 });

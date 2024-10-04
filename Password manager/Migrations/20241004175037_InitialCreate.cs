@@ -15,7 +15,8 @@ namespace Password_manager.Migrations
                 columns: table => new
                 {
                     HashedPassword = table.Column<string>(type: "TEXT", nullable: false),
-                    Salt = table.Column<string>(type: "TEXT", nullable: false)
+                    PasswordSalt = table.Column<string>(type: "TEXT", nullable: false),
+                    KeySalt = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,13 +27,13 @@ namespace Password_manager.Migrations
                 name: "Vault",
                 columns: table => new
                 {
-                    Url = table.Column<string>(type: "TEXT", nullable: false),
-                    EncryptedPassword = table.Column<string>(type: "TEXT", nullable: false),
-                    Salt = table.Column<string>(type: "TEXT", nullable: false)
+                    Data = table.Column<string>(type: "TEXT", nullable: false),
+                    Nonce = table.Column<string>(type: "TEXT", nullable: false),
+                    Tag = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vault", x => x.Url);
+                    table.PrimaryKey("PK_Vault", x => x.Data);
                 });
         }
 

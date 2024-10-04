@@ -22,7 +22,7 @@ public class LoginService
         var passwordHash = _repo.GetPasswordHash();
         var verification = _encryptionDecryptionUtils.Pbkdf2KeyDerivation(password, passwordHash.PasswordSalt);
 
-        if (Encoding.UTF8.GetBytes(passwordHash.HashedPassword) != verification.key) return false;
+        if (passwordHash.HashedPassword != Convert.ToBase64String(verification.key)) return false;
         return true;
     }
 
@@ -31,6 +31,19 @@ public class LoginService
         var passwordHash = _repo.GetPasswordHash();
         var key = _encryptionDecryptionUtils.Pbkdf2KeyDerivation(password, passwordHash.KeySalt);
         return key.key;
+    }
+
+    public bool CheckForAccount()
+    {
+        try
+        {
+            var passwordHash = _repo.GetPasswordHash();
+        }
+        catch(InvalidOperationException exception)
+        {
+            return false;
+        }
+        return true;
     }
 
     public void CreateAccount(string password)
