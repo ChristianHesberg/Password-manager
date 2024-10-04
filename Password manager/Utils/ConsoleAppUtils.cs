@@ -1,14 +1,17 @@
-﻿using Password_manager.Services;
+﻿using Password_manager.Entities;
+using Password_manager.Services;
 
 namespace Password_manager.Utils;
 
 public class ConsoleAppUtils
 {
     private readonly LoginService _loginService;
+    private readonly VaultService _vaultService;
 
-    public ConsoleAppUtils(LoginService loginService)
+    public ConsoleAppUtils(LoginService loginService, VaultService vaultService)
     {
         _loginService = loginService;
+        _vaultService = vaultService;
     }
 
     public string ReadPassword()  
@@ -71,6 +74,26 @@ public class ConsoleAppUtils
   
         return selectedIndex;  
     }  
+    
+    public void EnterNewPasswordUrlPair(byte[] key)  
+    {  
+        Console.Clear();  
+        Console.WriteLine("Enter the URL:");  
+        string url = Console.ReadLine();  
+              
+        Console.WriteLine("Enter the password:");
+        string password = Console.ReadLine();  
+  
+        var passwordEntry = new Entry()  
+        {  
+            Url = url,  
+            Password = password
+        };
+        
+        _vaultService.AddEntry(passwordEntry, key);
+  
+        Console.WriteLine("Password/URL pair saved.");  
+    } 
 
     public string EnterValidPassword()
     {

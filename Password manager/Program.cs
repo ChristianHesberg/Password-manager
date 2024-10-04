@@ -14,34 +14,24 @@ var repo = new Repository(db);
 var utils = new EncryptionDecryptionUtils();
 var vaultService = new VaultService(repo, utils);
 var loginService = new LoginService(repo, utils);
-var appUtils = new ConsoleAppUtils(loginService);
+var appUtils = new ConsoleAppUtils(loginService, vaultService);
 
 Console.WriteLine("Welcome to Password Manager!");
 
 string password;
 byte[] key;
-if (!loginService.CheckForAccount())
-{
-    Console.WriteLine("No user found, please enter password for new user");
-    password = appUtils.ReadPassword();
-    
-    loginService.CreateAccount(password);
-}
-else
-{
-    password = appUtils.EnterValidPassword();
-    key = loginService.GenerateVaultKey(password);
-}
+
+password = appUtils.EnterValidPassword();
+key = loginService.GenerateVaultKey(password);
 
 var selected = appUtils.DisplayMenu();
 if (selected == 0)
 {
-    vaultService.GetEntries(key);
+    Console.WriteLine(vaultService.GetEntries(key));
 }
-
 if (selected == 1)
 {
-    //handle enter new pair
+    appUtils.EnterNewPasswordUrlPair(key);
 }
 
 
