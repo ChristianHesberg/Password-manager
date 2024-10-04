@@ -5,7 +5,7 @@ namespace Password_manager.Utils;
 
 public class EncryptionDecryptionUtils
 {
-    public (byte[] key, byte[] salt) GenerateVaultKey(string password, string salt, int keySize = 32, int saltSize = 16, int iterations = 10000)  
+    public (byte[] key, byte[] salt) Pbkdf2KeyDerivation(string password, string salt, int keySize = 32, int saltSize = 16, int iterations = 10000)  
     {  
         // Generate a unique salt  
         var encodedSalt = Convert.FromBase64String(salt);

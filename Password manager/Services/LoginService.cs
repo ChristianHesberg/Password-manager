@@ -20,7 +20,7 @@ public class LoginService
     public bool Login(string password)
     {
         var passwordHash = _repo.GetPasswordHash();
-        var verification = _encryptionDecryptionUtils.GenerateVaultKey(password, passwordHash.PasswordSalt);
+        var verification = _encryptionDecryptionUtils.Pbkdf2KeyDerivation(password, passwordHash.PasswordSalt);
 
         if (Encoding.UTF8.GetBytes(passwordHash.HashedPassword) != verification.key) return false;
         return true;
@@ -29,7 +29,7 @@ public class LoginService
     public byte[] GenerateVaultKey(string password)
     {
         var passwordHash = _repo.GetPasswordHash();
-        var key = _encryptionDecryptionUtils.GenerateVaultKey(password, passwordHash.KeySalt);
+        var key = _encryptionDecryptionUtils.Pbkdf2KeyDerivation(password, passwordHash.KeySalt);
         return key.key;
     }
 
@@ -37,7 +37,7 @@ public class LoginService
     {
         var passwordSalt = _encryptionDecryptionUtils.GenerateSalt(16);
         var keySalt = _encryptionDecryptionUtils.GenerateSalt(16);
-        var passwordHash = _encryptionDecryptionUtils.GenerateVaultKey(password, Convert.ToBase64String(passwordSalt));
+        var passwordHash = _encryptionDecryptionUtils.Pbkdf2KeyDerivation(password, Convert.ToBase64String(passwordSalt));
 
         var passwordHashEntity = new PasswordHash()
         {

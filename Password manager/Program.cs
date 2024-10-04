@@ -13,7 +13,7 @@ var username = "peter";
 var password = "p@ssw0rd1!";
 
 EncryptionDecryptionUtils encryptionService = new EncryptionDecryptionUtils();
-var res = encryptionService.GenerateVaultKey(password, Constants.SaltInBase64);
+var res = encryptionService.Pbkdf2KeyDerivation(password, Constants.SaltInBase64);
 Console.WriteLine(Convert.ToBase64String(res.key));
 Console.WriteLine(Convert.ToBase64String(res.salt));
 
