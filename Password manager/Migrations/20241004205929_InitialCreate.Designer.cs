@@ -10,7 +10,7 @@ using Password_manager.Repo;
 namespace Password_manager.Migrations
 {
     [DbContext(typeof(VaultContext))]
-    [Migration("20241004175037_InitialCreate")]
+    [Migration("20241004205929_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -39,16 +39,16 @@ namespace Password_manager.Migrations
 
             modelBuilder.Entity("Password_manager.Entities.VaultItem", b =>
                 {
-                    b.Property<string>("Data")
-                        .HasColumnType("TEXT");
+                    b.Property<byte[]>("Data")
+                        .HasColumnType("BLOB");
 
-                    b.Property<string>("Nonce")
+                    b.Property<byte[]>("Nonce")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("BLOB");
 
-                    b.Property<string>("Tag")
+                    b.Property<byte[]>("Tag")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("BLOB");
 
                     b.HasKey("Data");
 

@@ -27,9 +27,9 @@ namespace Password_manager.Migrations
                 name: "Vault",
                 columns: table => new
                 {
-                    Data = table.Column<string>(type: "TEXT", nullable: false),
-                    Nonce = table.Column<string>(type: "TEXT", nullable: false),
-                    Tag = table.Column<string>(type: "TEXT", nullable: false)
+                    Data = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    Nonce = table.Column<byte[]>(type: "BLOB", nullable: false),
+                    Tag = table.Column<byte[]>(type: "BLOB", nullable: false)
                 },
                 constraints: table =>
                 {

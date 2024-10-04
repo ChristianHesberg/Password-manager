@@ -21,13 +21,26 @@ Console.WriteLine("Welcome to Password Manager!");
 string password;
 byte[] key;
 
+if (!loginService.CheckForAccount())
+{
+    Console.WriteLine("No user found, please enter password for new user");
+    password = appUtils.ReadPassword();
+    
+    loginService.CreateAccount(password);
+}
+
 password = appUtils.EnterValidPassword();
 key = loginService.GenerateVaultKey(password);
 
 var selected = appUtils.DisplayMenu();
 if (selected == 0)
 {
-    Console.WriteLine(vaultService.GetEntries(key));
+    var list = vaultService.GetEntries(key);
+    foreach (var entry in list)
+    {
+        Console.WriteLine(entry.Password);
+        Console.WriteLine(entry.Url);
+    }
 }
 if (selected == 1)
 {

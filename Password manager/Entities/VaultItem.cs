@@ -5,7 +5,7 @@ namespace Password_manager.Entities;
 public class VaultItem
 {
     [Key]
-    public string Data { get; set; }
-    public string Nonce { get; set; }
-    public string Tag { get; set; }
+    public byte[] Data { get; set; }
+    public byte[] Nonce { get; set; }
+    public byte[] Tag { get; set; }
 }

@@ -24,9 +24,9 @@ public class VaultService
         foreach (var item in items)
         {
             var decrypted = _encryptionDecryptionUtils.Decrypt(
-                Encoding.UTF8.GetBytes(item.Data),
-                Encoding.UTF8.GetBytes(item.Nonce),
-                Encoding.UTF8.GetBytes(item.Tag),
+                item.Data,
+                item.Nonce,
+                item.Tag,
                 key
             );
             var deserialized = _encryptionDecryptionUtils.ExtractPartsFromData(decrypted);
@@ -46,9 +46,9 @@ public class VaultService
         var encrypted = _encryptionDecryptionUtils.Encrypt(serializedData, key);
         var vaultItem = new VaultItem()
         {
-            Data = Convert.ToBase64String(encrypted.ciphertext),
-            Nonce = Convert.ToBase64String(encrypted.nonce),
-            Tag = Convert.ToBase64String(encrypted.tag)
+            Data = encrypted.ciphertext,
+            Nonce = encrypted.nonce,
+            Tag = encrypted.tag
         };
         _repo.AddVaultItem(vaultItem);
     }
