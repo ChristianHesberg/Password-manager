@@ -1,6 +1,7 @@
 ﻿## Starting the app
 
 - cd "password manager"
+- dotnet ef migrations add InitialCreate
 - dotnet ef database update
 - start project
 

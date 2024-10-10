@@ -47,6 +47,8 @@ ScaffoldingReadMe.txt
 Dockerfile  
 docker-compose.yml  
 .dockerignore  
+Migrastions
+*.db
   
 # Node.js dependencies  
 node_modules/  
