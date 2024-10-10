@@ -5,7 +5,7 @@
 - start project
 
 ## Security flow
-![img.png](img.png)
+![./img.png](img.png)
 
 ## Security considerations
 - A user has a master password
