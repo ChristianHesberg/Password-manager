@@ -10,7 +10,7 @@ using Password_manager.Repo;
 namespace Password_manager.Migrations
 {
     [DbContext(typeof(VaultContext))]
-    [Migration("20241004205929_InitialCreate")]
+    [Migration("20241006165344_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

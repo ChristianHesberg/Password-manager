@@ -1,4 +1,5 @@
-﻿using Password_manager.Entities;
+﻿using System.Security.Cryptography;
+using Password_manager.Entities;
 using Password_manager.Services;
 
 namespace Password_manager.Utils;
@@ -38,9 +39,9 @@ public class ConsoleAppUtils
         return password;  
     }
     
-    public int DisplayMenu()  
+    public int DisplayMenu(string [] options)  
     {  
-        string[] options = { "Get Passwords", "Enter New Password/URL Pair" };  
+        
         int selectedIndex = 0;  
   
         ConsoleKeyInfo keyInfo;  
@@ -79,10 +80,23 @@ public class ConsoleAppUtils
     {  
         Console.Clear();  
         Console.WriteLine("Enter the URL:");  
-        string url = Console.ReadLine();  
-              
-        Console.WriteLine("Enter the password:");
-        string password = Console.ReadLine();  
+        string url = Console.ReadLine();
+        
+        string[] options = { "Generate password", "Enter password" };
+        var result = DisplayMenu(options);
+
+        string password = "";
+        if (result == 0)
+        {
+            var passBytes = new byte[32];
+            RandomNumberGenerator.Fill(passBytes);
+            password = Convert.ToBase64String(passBytes);
+            Console.WriteLine(password);
+        } else if (result == 1)
+        {
+            Console.WriteLine("Enter the password:");
+            password = Console.ReadLine();  
+        }
   
         var passwordEntry = new Entry()  
         {  

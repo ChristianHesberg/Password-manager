@@ -2,6 +2,7 @@
 
 
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Password_manager;
 using Password_manager.Entities;
@@ -9,7 +10,10 @@ using Password_manager.Repo;
 using Password_manager.Services;
 using Password_manager.Utils;
 
+//var dbContextOptions = new DbContextOptionsBuilder<VaultContext>();
+//dbContextOptions.UseSqlite("Data Source=passwordmanager.db");
 using var db = new VaultContext();
+
 var repo = new Repository(db);
 var utils = new EncryptionDecryptionUtils();
 var vaultService = new VaultService(repo, utils);
@@ -32,20 +36,29 @@ if (!loginService.CheckForAccount())
 password = appUtils.EnterValidPassword();
 key = loginService.GenerateVaultKey(password);
 
-var selected = appUtils.DisplayMenu();
-if (selected == 0)
+string[] options = { "Get Passwords", "Enter New Password/URL Pair" };
+while (true)
 {
-    var list = vaultService.GetEntries(key);
-    foreach (var entry in list)
+    var selected = appUtils.DisplayMenu(options);
+    if (selected == 0)
     {
-        Console.WriteLine(entry.Password);
-        Console.WriteLine(entry.Url);
+        var list = vaultService.GetEntries(key);
+        foreach (var entry in list)
+        {
+            Console.WriteLine($"{entry.Url} - {entry.Password}");
+            Console.WriteLine("-----------------------------");
+        }
     }
+    if (selected == 1)
+    {
+        appUtils.EnterNewPasswordUrlPair(key);
+    }
+
+    Console.WriteLine("Press any key to continue...");  
+    Console.ReadKey(); 
+    Console.Clear();
 }
-if (selected == 1)
-{
-    appUtils.EnterNewPasswordUrlPair(key);
-}
+ 
 
 
               
@@ -57,8 +70,7 @@ if (selected == 1)
 // bool isAuthenticated = AuthenticationService.Login(password);  
 // if (isAuthenticated) { ... } else { ... }  
   
-Console.WriteLine("Press any key to exit...");  
-Console.ReadKey();  
+
 
 
 /*var username = "peter";
